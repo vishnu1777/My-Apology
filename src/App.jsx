@@ -1,0 +1,282 @@
+import { useState, useEffect, useRef } from 'react';
+
+// Layout Components
+import Header from './components/layout/Header';
+import Footer from './components/layout/Footer';
+
+// UI Components
+import LetterModal from './components/ui/LetterModal';
+
+// Section Components
+import MemoriesCarousel from './components/sections/MemoriesCarousel';
+import ApologyQuotes from './components/sections/ApologyQuotes';
+import Promises from './components/sections/Promises';
+import Timeline from './components/sections/Timeline';
+import CallToAction from './components/sections/CallToAction';
+import DraggableMediaCards from './components/sections/DraggableMediaCards';
+
+export default function ApologyWebsite() {
+  // State for carousel
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [currentQuote, setCurrentQuote] = useState(0);
+  const [showLetter, setShowLetter] = useState(false);
+  const [activeCard, setActiveCard] = useState(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const [startPos, setStartPos] = useState({ x: 0, y: 0 });
+  const [currentPos, setCurrentPos] = useState({ x: 0, y: 0 });
+  const [isVideoPlaying, setIsVideoPlaying] = useState({});
+
+  // Video refs
+  const videoRefs = useRef({});
+
+  // Calculate max scroll distance to prevent scrolling beyond page width
+  const maxScrollDistance = typeof window !== 'undefined' ? window.innerWidth / 3 : 300;
+
+  // Mixed media cards - videos and images
+  const mediaCards = [
+    {
+      id: 1,
+      type: 'image',
+      src: "/api/placeholder/800/600",
+      caption: "Our first roadtrip together"
+    },
+    {
+      id: 2,
+      type: 'video',
+      src: "/api/placeholder/800/600", // Placeholder since we can't embed actual videos
+      posterSrc: "/api/placeholder/800/600",
+      caption: "That silly dance video from Sarah's wedding"
+    },
+    {
+      id: 3,
+      type: 'image',
+      src: "/api/placeholder/800/600",
+      caption: "Our picnic at the lake"
+    },
+    {
+      id: 4,
+      type: 'video',
+      src: "/api/placeholder/800/600", // Placeholder since we can't embed actual videos
+      posterSrc: "/api/placeholder/800/600",
+      caption: "Your birthday surprise reaction"
+    },
+    {
+      id: 5,
+      type: 'image',
+      src: "/api/placeholder/800/600",
+      caption: "Hiking to the waterfall"
+    },
+  ];
+
+  // Sample images - replace with placeholder images
+  const memories = [
+    { id: 1, src: "/api/placeholder/800/600", alt: "Our first date", caption: "Our first date at the coffee shop" },
+    { id: 2, src: "/api/placeholder/800/600", alt: "Beach day", caption: "That perfect day at the beach" },
+    { id: 3, src: "/api/placeholder/800/600", alt: "Movie night", caption: "Movie night with your favorite snacks" },
+    { id: 4, src: "/api/placeholder/800/600", alt: "Road trip", caption: "Our amazing road trip adventure" },
+  ];
+
+  // Apology quotes
+  const quotes = [
+    "I'm truly sorry for hurting you. You deserve better, and I promise to do better.",
+    "Missing your smile is the hardest part of knowing I caused you pain.",
+    "Every day without your forgiveness reminds me of how much you mean to me.",
+    "I was wrong, and I'm owning my mistake. Please give me a chance to make it right.",
+    "The thought of losing you makes me realize how precious what we have truly is."
+  ];
+
+  // Timeline events
+  const timeline = [
+    { date: "First Date", description: "When you wore that blue dress and I knew I was falling for you" },
+    { date: "First Kiss", description: "Under the stars at the lake, a moment I'll never forget" },
+    { date: "Anniversary", description: "One amazing year together filled with beautiful memories" },
+    { date: "The Mistake", description: "When I let you down - a moment I deeply regret" },
+    { date: "Today", description: "The day I'm asking for your forgiveness and a fresh start" }
+  ];
+
+  // Promises
+  const promises = [
+    "To communicate better and be more honest",
+    "To prioritize our relationship and quality time",
+    "To be more attentive to your needs and feelings",
+    "To work on my flaws that caused this issue",
+    "To never repeat this mistake again"
+  ];
+
+  // Functions for draggable cards
+  const handleMouseDown = (e, id) => {
+    setActiveCard(id);
+    setIsDragging(true);
+    setStartPos({ x: e.clientX, y: e.clientY });
+    setCurrentPos({ x: 0, y: 0 });
+  };
+
+  const handleTouchStart = (e, id) => {
+    setActiveCard(id);
+    setIsDragging(true);
+    setStartPos({ x: e.touches[0].clientX, y: e.touches[0].clientY });
+    setCurrentPos({ x: 0, y: 0 });
+  };
+
+  const handleMouseMove = (e) => {
+    if (isDragging) {
+      // Constrain the movement to max scroll distance
+      const newX = e.clientX - startPos.x;
+      const constrainedX = Math.max(-maxScrollDistance, Math.min(maxScrollDistance, newX));
+
+      setCurrentPos({
+        x: constrainedX,
+        y: e.clientY - startPos.y
+      });
+    }
+  };
+
+  const handleTouchMove = (e) => {
+    if (isDragging) {
+      // Constrain the movement to max scroll distance
+      const newX = e.touches[0].clientX - startPos.x;
+      const constrainedX = Math.max(-maxScrollDistance, Math.min(maxScrollDistance, newX));
+
+      setCurrentPos({
+        x: constrainedX,
+        y: e.touches[0].clientY - startPos.y
+      });
+    }
+  };
+
+  const handleMouseUp = () => {
+    if (isDragging) {
+      // If dragged significantly, remove card
+      if (Math.abs(currentPos.x) > 100) {
+        // Remove card animation would happen here
+        // For now, we'll just reset
+        setTimeout(() => {
+          setActiveCard(null);
+          setIsDragging(false);
+          setCurrentPos({ x: 0, y: 0 });
+        }, 300);
+      } else {
+        // Reset if not dragged far enough
+        setIsDragging(false);
+        setCurrentPos({ x: 0, y: 0 });
+      }
+    }
+  };
+
+  const toggleVideoPlay = (id) => {
+    const video = videoRefs.current[id];
+    if (video) {
+      if (video.paused) {
+        video.play();
+        setIsVideoPlaying(prev => ({ ...prev, [id]: true }));
+      } else {
+        video.pause();
+        setIsVideoPlaying(prev => ({ ...prev, [id]: false }));
+      }
+    }
+  };
+
+  // Carousel navigation
+  const nextSlide = () => {
+    setCurrentSlide((prev) => (prev === memories.length - 1 ? 0 : prev + 1));
+  };
+
+  const prevSlide = () => {
+    setCurrentSlide((prev) => (prev === 0 ? memories.length - 1 : prev - 1));
+  };
+
+  // Quote card navigation
+  const nextQuote = () => {
+    setCurrentQuote((prev) => (prev === quotes.length - 1 ? 0 : prev + 1));
+  };
+
+  const prevQuote = () => {
+    setCurrentQuote((prev) => (prev === 0 ? quotes.length - 1 : prev - 1));
+  };
+
+  // Handle document events for dragging
+  useEffect(() => {
+    const handleMouseMoveDoc = (e) => {
+      if (isDragging) handleMouseMove(e);
+    };
+
+    const handleTouchMoveDoc = (e) => {
+      if (isDragging) handleTouchMove(e);
+    };
+
+    const handleMouseUpDoc = () => {
+      if (isDragging) handleMouseUp();
+    };
+
+    const handleTouchEndDoc = () => {
+      if (isDragging) handleMouseUp();
+    };
+
+    document.addEventListener('mousemove', handleMouseMoveDoc);
+    document.addEventListener('mouseup', handleMouseUpDoc);
+    document.addEventListener('touchmove', handleTouchMoveDoc);
+    document.addEventListener('touchend', handleTouchEndDoc);
+
+    return () => {
+      document.removeEventListener('mousemove', handleMouseMoveDoc);
+      document.removeEventListener('mouseup', handleMouseUpDoc);
+      document.removeEventListener('touchmove', handleTouchMoveDoc);
+      document.removeEventListener('touchend', handleTouchEndDoc);
+    };
+  }, [isDragging]);
+
+  // Auto-rotate carousel
+  useEffect(() => {
+    const interval = setInterval(() => {
+      nextSlide();
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-rose-100 to-pink-200 text-gray-800 font-sans">
+      <Header setShowLetter={setShowLetter} />
+
+      <LetterModal showLetter={showLetter} setShowLetter={setShowLetter} />
+
+      <MemoriesCarousel
+        memories={memories}
+        currentSlide={currentSlide}
+        setCurrentSlide={setCurrentSlide}
+        nextSlide={nextSlide}
+        prevSlide={prevSlide}
+      />
+
+      <DraggableMediaCards
+        mediaCards={mediaCards}
+        activeCard={activeCard}
+        isDragging={isDragging}
+        currentPos={currentPos}
+        isVideoPlaying={isVideoPlaying}
+        handleMouseDown={handleMouseDown}
+        handleTouchStart={handleTouchStart}
+        handleMouseMove={handleMouseMove}
+        handleTouchMove={handleTouchMove}
+        toggleVideoPlay={toggleVideoPlay}
+        videoRefs={videoRefs}
+      />
+
+      <ApologyQuotes
+        quotes={quotes}
+        currentQuote={currentQuote}
+        setCurrentQuote={setCurrentQuote}
+        nextQuote={nextQuote}
+        prevQuote={prevQuote}
+      />
+
+      <Promises promises={promises} />
+
+      <Timeline timeline={timeline} />
+
+      <CallToAction />
+
+      <Footer />
+    </div>
+  );
+}
