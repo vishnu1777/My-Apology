@@ -180,13 +180,25 @@ export const ReconciliationOptionsComponent = () => {
             ) : (
                 <div className="text-center py-6 animate-fade-in">
                     <div className="text-5xl mb-6">❤️</div>
-                    <h3 className="text-xl font-bold text-rose-600 mb-3">Thank You!</h3>
+                    <h3 className="text-xl font-bold text-rose-600 mb-3">Your Wish Is My Command</h3>
                     <p className="text-gray-700 mb-4">
-                        I've received your wishes and promise to fulfill them. I'll do everything to make things right again.
+                        I've received your wishes and promise to fulfill them. From the bottom of my heart, I apologize for hurting you.
+                        You deserve better, and I'll do everything to make things right again.
+                    </p>
+
+                    <div className="my-6 p-4 bg-purple-100 rounded-lg border border-purple-300 text-purple-800">
+                        <span className="block text-2xl mb-2">✨ The apology genie has heard your wish! ✨</span>
+                        <p>Your message has been sent to your lover's heart. Consider it done.</p>
+                    </div>
+
+                    <p className="italic text-rose-700 mt-4">
+                        "Every beat of my heart calls your name. Every thought in my mind seeks your forgiveness.
+                        My arms feel empty without you, and I promise to cherish and respect you every single day forward.
+                        Your love is the greatest gift, and I won't take it for granted again."
                     </p>
 
                     {(selectedOptions.length > 0 || otherOption) && (
-                        <div className="mt-4">
+                        <div className="mt-6">
                             <p className="font-medium text-gray-700">You selected:</p>
                             <ul className="mt-2 flex flex-wrap justify-center gap-2">
                                 {selectedOptions.map(id => (
@@ -202,6 +214,10 @@ export const ReconciliationOptionsComponent = () => {
                             </ul>
                         </div>
                     )}
+
+                    <p className="mt-6 text-sm text-gray-500">
+                        Because true love means saying "I'm sorry" and proving it with actions, not just words.
+                    </p>
                 </div>
             )}
         </section>

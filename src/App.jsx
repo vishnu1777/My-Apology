@@ -86,12 +86,12 @@ export default function ApologyWebsite() {
 
   // Sample images - replace with placeholder images
   const memories = [
-    { id: 1, src: "/images/mcdonalds.jpeg", alt: "Our first date", caption: "Our first date at the coffee shop" },
-    { id: 2, src: "/images/beach.jpeg", alt: "Beach day", caption: "That perfect day at the beach" },
-    { id: 3, src: "/images/inoxmall.jpeg", alt: "Movie night", caption: "Movie night with your favorite snacks" },
-    { id: 4, src: "/images/forum-outside.jpeg", alt: "Road trip", caption: "Our amazing road trip adventure" },
-    { id: 5, src: "/images/zoo.jpeg", alt: "Road trip", caption: "Our amazing road trip adventure" },
-    { id: 6, src: "/images/underwater.jpeg", alt: "Road trip", caption: "Our amazing road trip adventure" }
+    { id: 1, src: "/images/mcdonalds.jpeg", alt: "Our first date", caption: "Our first date — just you, me, and a million butterflies (plus McD)." },
+    { id: 2, src: "/images/beach.jpeg", alt: "Beach day", caption: "The sun, the sea, and your smile — my favorite view that day." },
+    { id: 3, src: "/images/inoxmall.jpeg", alt: "Movie night", caption: "You picked the movie, I picked you — best choice ever." },
+    { id: 4, src: "/images/forum-outside.jpeg", alt: "Road trip", caption: "Every mile with you feels like the beginning of forever." },
+    { id: 5, src: "/images/zoo.jpeg", alt: "Zoo trip", caption: "Surrounded by wild things, and yet, I only had eyes for you." },
+    { id: 6, src: "/images/underwater.jpeg", alt: "Aquarium", caption: "All those beautiful fish, and still, you were the most breathtaking view." }
   ];
 
   // Apology quotes
@@ -109,11 +109,11 @@ export default function ApologyWebsite() {
 
   // Timeline events
   const timeline = [
-    { date: "First Date", description: "When you wore that blue dress and I knew I was falling for you" },
-    { date: "First Kiss", description: "Under the stars at the lake, a moment I'll never forget" },
-    { date: "Anniversary", description: "One amazing year together filled with beautiful memories" },
-    { date: "The Mistake", description: "When I let you down - a moment I deeply regret" },
-    { date: "Today", description: "The day I'm asking for your forgiveness and a fresh start" }
+    { date: "2021-07-25", description: "First time you sent me your image with MOM" },
+    { date: "2022-01-15", description: "Under the stars at the lake, a moment I'll never forget" },
+    { date: "2002-02-04", description: "Birthday of my precious" },
+    { date: "2025-03-10", description: "When I let you down - a moment I deeply regret" },
+    { date: "2025-05-14", description: "The day I'm asking for your forgiveness and a fresh start" }
   ];
 
   // Promises
