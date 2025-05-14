@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import { Play, Pause } from 'lucide-react';
 
 export default function DraggableMediaCards({
@@ -14,28 +14,45 @@ export default function DraggableMediaCards({
     toggleVideoPlay,
     videoRefs
 }) {
-    // Calculate max scroll distance to prevent scrolling beyond page width
-    const maxScrollDistance = window.innerWidth / 3; // Limit to 1/3 of screen width
+    const [windowWidth, setWindowWidth] = useState(
+        typeof window !== 'undefined' ? window.innerWidth : 1200
+    );
+
+    // Update window width on resize
+    useEffect(() => {
+        const handleResize = () => {
+            setWindowWidth(window.innerWidth);
+        };
+
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
+    // Calculate max scroll distance based on screen size to prevent going off-screen
+    const maxScrollDistance = Math.min(windowWidth / 5, 80); // More restricted on smaller screens
 
     // Constrain horizontal position within bounds
     const getConstrainedPosition = (pos) => {
         return {
             x: Math.max(-maxScrollDistance, Math.min(maxScrollDistance, pos.x)),
-            y: pos.y
+            y: Math.max(-20, Math.min(20, pos.y)) // More restricted vertical movement
         };
     };
 
     // Get constrained position for cards
     const constrainedPos = getConstrainedPosition(currentPos);
 
+    // Calculate card width based on screen size
+    const cardWidth = windowWidth < 640 ? "w-[80%]" : "w-64 md:w-80";
+
     return (
-        <section className="py-16 px-4 bg-indigo-50 overflow-hidden">
+        <section className="py-16 px-4 bg-indigo-50 relative">
             <div className="max-w-5xl mx-auto">
                 <h2 className="text-3xl font-bold text-center mb-2">Our Video Memories</h2>
                 <p className="text-gray-600 text-center mb-12">Swipe through our favorite moments together</p>
 
                 <div
-                    className="relative h-96 w-full flex items-center justify-center mb-8"
+                    className="relative h-[32rem] sm:h-[28rem] w-full flex items-center justify-center mb-12"
                     onMouseMove={handleMouseMove}
                     onTouchMove={handleTouchMove}
                 >
@@ -43,12 +60,16 @@ export default function DraggableMediaCards({
                         // Calculate card positions for shuffle effect
                         const baseZIndex = 10 + mediaCards.length - index;
                         const baseTranslateY = index * -8;
-                        const baseRotate = (index % 2 === 0 ? 1 : -1) * (index * 1.5);
+                        // Reduce rotation angle on mobile
+                        const baseRotate = (index % 2 === 0 ? 1 : -1) * (windowWidth < 640 ? index * 0.8 : index * 1.5);
+
+                        // Adjust rotation sensitivity based on screen size
+                        const rotationSensitivity = windowWidth < 640 ? 0.02 : 0.04;
 
                         // Active card adjustments with constrained position
                         const isActive = activeCard === card.id;
                         const activeStyles = isActive ? {
-                            transform: `translateX(${constrainedPos.x}px) translateY(${constrainedPos.y + baseTranslateY}px) rotate(${baseRotate + (constrainedPos.x * 0.05)}deg)`,
+                            transform: `translateX(${constrainedPos.x}px) translateY(${constrainedPos.y + baseTranslateY}px) rotate(${baseRotate + (constrainedPos.x * rotationSensitivity)}deg)`,
                             zIndex: 50,
                             boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 10px 10px -5px rgba(0, 0, 0, 0.1)'
                         } : {
@@ -59,7 +80,7 @@ export default function DraggableMediaCards({
                         return (
                             <div
                                 key={card.id}
-                                className="absolute top-1/2 left-1/2 w-64 md:w-80 bg-white rounded-xl overflow-hidden shadow-lg cursor-grab active:cursor-grabbing transition-all duration-300"
+                                className={`absolute top-1/2 left-1/2 ${cardWidth} bg-white rounded-xl overflow-hidden shadow-lg cursor-grab active:cursor-grabbing transition-all duration-300 max-w-xs sm:max-w-sm`}
                                 style={{
                                     transform: `translateX(-50%) translateY(-50%) translateY(${baseTranslateY}px) rotate(${baseRotate}deg)`,
                                     zIndex: baseZIndex,
@@ -68,7 +89,7 @@ export default function DraggableMediaCards({
                                 onMouseDown={(e) => handleMouseDown(e, card.id)}
                                 onTouchStart={(e) => handleTouchStart(e, card.id)}
                             >
-                                <div className="relative h-48 md:h-56 bg-gray-200">
+                                <div className="relative h-40 sm:h-48 md:h-56 bg-gray-200">
                                     {card.type === 'image' ? (
                                         <img
                                             src={card.src}
@@ -93,16 +114,16 @@ export default function DraggableMediaCards({
                                                 className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-30 hover:bg-opacity-20 transition-opacity"
                                             >
                                                 {isVideoPlaying[card.id] ? (
-                                                    <Pause className="text-white w-12 h-12" />
+                                                    <Pause className="text-white w-8 h-8 sm:w-12 sm:h-12" />
                                                 ) : (
-                                                    <Play className="text-white w-12 h-12" />
+                                                    <Play className="text-white w-8 h-8 sm:w-12 sm:h-12" />
                                                 )}
                                             </button>
                                         </div>
                                     )}
                                 </div>
-                                <div className="p-4">
-                                    <p className="text-gray-700 text-center">{card.caption}</p>
+                                <div className="p-3 sm:p-4">
+                                    <p className="text-gray-700 text-center text-sm sm:text-base">{card.caption}</p>
                                 </div>
                             </div>
                         );

@@ -15,11 +15,12 @@ export default function LetterModal({ showLetter, setShowLetter }) {
                 <h2 className="text-2xl font-bold text-rose-600 mb-4">My Heartfelt Apology</h2>
                 <div className="prose text-gray-700">
                     <p>My dearest,</p>
-                    <p>They say actions speak louder than words, which is why I've created this site for you. But I also know that sometimes, words are needed too.</p>
-                    <p>I've been reflecting deeply on what happened, and I want you to know that I take full responsibility for my actions. I understand why you're hurt, and your feelings are completely valid.</p>
-                    <p>What we have is special—rare even. I realize now how careless I was with something so precious. The thought of losing you has made me understand just how important you are in my life.</p>
-                    <p>I promise to learn from this mistake. I'm committed to being a better person and a better partner because you deserve nothing less.</p>
-                    <p>I hope you can find it in your heart to forgive me, but I also understand if you need time. Either way, I want you to know that you are loved, valued, and irreplaceable in my life.</p>
+                    <p>I've created this site because words alone didn't seem enough to express how deeply sorry I am for what happened between us.</p>
+                    <p>This misunderstanding has caused you pain, and that's the last thing I ever wanted to do. I want you to know that I take full responsibility for my part in it. Your feelings are completely valid, and I understand why you're hurt.</p>
+                    <p>I promise you this will be my last mistake. I've learned so much from this experience about what truly matters – you, and the beautiful relationship we've built together.</p>
+                    <p>Please don't leave me. What we have is rare and precious. I've always been loyal to you and cared for you with all my heart. That has never changed, not for a single moment.</p>
+                    <p>All I'm asking for is one more opportunity to show you how much you mean to me. I'll do whatever it takes to rebuild your trust and make things right again.</p>
+                    <p>I'm begging you – please give us another chance. Our love is worth fighting for, and I'm ready to do anything to save what we have.</p>
                     <p className="mt-6">With all my love and deepest apologies,</p>
                     <p>[Your Name]</p>
                 </div>

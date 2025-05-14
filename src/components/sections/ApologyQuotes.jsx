@@ -8,7 +8,7 @@ export default function ApologyQuotes({
     prevQuote
 }) {
     return (
-        <section className="py-16 px-4 bg-rose-50">
+        <section className="py-16 px-4 bg-rose-50 overflow-hidden">
             <div className="max-w-4xl mx-auto">
                 <h2 className="text-3xl font-bold text-center mb-2">From My Heart To Yours</h2>
                 <p className="text-gray-600 text-center mb-12">Swipe to read how I feel</p>
@@ -18,10 +18,10 @@ export default function ApologyQuotes({
                         <div
                             key={index}
                             className={`absolute w-full max-w-lg bg-white p-8 rounded-xl shadow-xl transform transition-all duration-500 ${index === currentQuote
-                                    ? 'scale-100 opacity-100 rotate-0 z-10'
-                                    : index < currentQuote
-                                        ? 'scale-90 opacity-0 -rotate-6 -translate-x-full'
-                                        : 'scale-90 opacity-0 rotate-6 translate-x-full'
+                                ? 'scale-100 opacity-100 rotate-0 z-10'
+                                : index < currentQuote
+                                    ? 'scale-90 opacity-0 -rotate-6 -translate-x-full'
+                                    : 'scale-90 opacity-0 rotate-6 translate-x-full'
                                 }`}
                         >
                             <p className="text-gray-800 text-lg md:text-xl font-medium italic text-center">"{quote}"</p>

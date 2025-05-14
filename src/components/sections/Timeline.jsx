@@ -2,7 +2,7 @@ import { Calendar } from 'lucide-react';
 
 export default function Timeline({ timeline }) {
     return (
-        <section className="py-16 px-4 bg-rose-50">
+        <section className="py-16 px-4 bg-rose-50 overflow-hidden">
             <div className="max-w-4xl mx-auto">
                 <h2 className="text-3xl font-bold text-center mb-2">Our Journey</h2>
                 <p className="text-gray-600 text-center mb-12">The path we've walked together</p>

@@ -8,7 +8,7 @@ export default function MemoriesCarousel({
     prevSlide
 }) {
     return (
-        <section className="py-16 px-4 bg-white">
+        <section className="py-16 px-4 bg-white overflow-hidden">
             <div className="max-w-4xl mx-auto">
                 <h2 className="text-3xl font-bold text-center mb-2">Our Beautiful Memories</h2>
                 <p className="text-gray-600 text-center mb-8">The moments that remind me how lucky I am to have you</p>

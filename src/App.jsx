@@ -78,11 +78,15 @@ export default function ApologyWebsite() {
 
   // Apology quotes
   const quotes = [
-    "I'm truly sorry for hurting you. You deserve better, and I promise to do better.",
-    "Missing your smile is the hardest part of knowing I caused you pain.",
-    "Every day without your forgiveness reminds me of how much you mean to me.",
-    "I was wrong, and I'm owning my mistake. Please give me a chance to make it right.",
-    "The thought of losing you makes me realize how precious what we have truly is."
+    "I'm truly sorry for this misunderstanding between us. Please believe me when I say it won't happen again.",
+    "This will be my last mistake, I promise from the bottom of my heart. I've learned my lesson.",
+    "Please don't leave me. What we have is too special to throw away over one mistake.",
+    "I've always been loyal and cared deeply for you. That has never changed, not for a moment.",
+    "Please give me one more opportunity to make things right. I'll prove myself worthy of your trust.",
+    "I'm begging you to reconsider. Our love is worth fighting for, and I'll do anything to save it.",
+    "Every day without your forgiveness reminds me of how much I truly need you in my life.",
+    "I was wrong, and I'm owning my mistake. Please let me show you how much you mean to me.",
+    "The thought of losing you makes me realize I can't imagine a future without you by my side."
   ];
 
   // Timeline events
@@ -96,11 +100,11 @@ export default function ApologyWebsite() {
 
   // Promises
   const promises = [
-    "To communicate better and be more honest",
-    "To prioritize our relationship and quality time",
-    "To be more attentive to your needs and feelings",
-    "To work on my flaws that caused this issue",
-    "To never repeat this mistake again"
+    "To communicate better and eliminate any misunderstandings between us",
+    "To prioritize your feelings and our relationship above everything else",
+    "To be more attentive to your needs and the things that make you happy",
+    "To prove my loyalty and dedication to you every single day",
+    "To never repeat this mistake and be the partner you truly deserve"
   ];
 
   // Functions for draggable cards
@@ -235,7 +239,7 @@ export default function ApologyWebsite() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-rose-100 to-pink-200 text-gray-800 font-sans">
+    <div className="min-h-screen bg-gradient-to-b from-rose-100 to-pink-200 text-gray-800 font-sans overflow-x-hidden">
       <Header setShowLetter={setShowLetter} />
 
       <LetterModal showLetter={showLetter} setShowLetter={setShowLetter} />
