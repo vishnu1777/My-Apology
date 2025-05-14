@@ -28,14 +28,14 @@ export default function DraggableMediaCards({
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
-    // Calculate max scroll distance based on screen size to prevent going off-screen
-    const maxScrollDistance = Math.min(windowWidth / 5, 80); // More restricted on smaller screens
+    // Calculate max scroll distance based on screen size
+    const maxScrollDistance = Math.min(windowWidth / 4, 100); // More restricted on smaller screens
 
     // Constrain horizontal position within bounds
     const getConstrainedPosition = (pos) => {
         return {
             x: Math.max(-maxScrollDistance, Math.min(maxScrollDistance, pos.x)),
-            y: Math.max(-20, Math.min(20, pos.y)) // More restricted vertical movement
+            y: Math.max(-30, Math.min(30, pos.y)) // More restricted vertical movement
         };
     };
 
@@ -43,16 +43,16 @@ export default function DraggableMediaCards({
     const constrainedPos = getConstrainedPosition(currentPos);
 
     // Calculate card width based on screen size
-    const cardWidth = windowWidth < 640 ? "w-[80%]" : "w-64 md:w-80";
+    const cardWidth = windowWidth < 640 ? "w-[85%]" : "w-64 md:w-80";
 
     return (
-        <section className="py-16 px-4 bg-indigo-50 relative">
-            <div className="max-w-5xl mx-auto">
+        <section className="py-16 px-4 bg-indigo-50 overflow-hidden">
+            <div className="max-w-5xl mx-auto overflow-hidden">
                 <h2 className="text-3xl font-bold text-center mb-2">Our Video Memories</h2>
                 <p className="text-gray-600 text-center mb-12">Swipe through our favorite moments together</p>
 
                 <div
-                    className="relative h-[32rem] sm:h-[28rem] w-full flex items-center justify-center mb-12"
+                    className="relative h-[32rem] sm:h-[28rem] w-full flex items-center justify-center mb-12 overflow-hidden"
                     onMouseMove={handleMouseMove}
                     onTouchMove={handleTouchMove}
                 >
@@ -64,7 +64,7 @@ export default function DraggableMediaCards({
                         const baseRotate = (index % 2 === 0 ? 1 : -1) * (windowWidth < 640 ? index * 0.8 : index * 1.5);
 
                         // Adjust rotation sensitivity based on screen size
-                        const rotationSensitivity = windowWidth < 640 ? 0.02 : 0.04;
+                        const rotationSensitivity = windowWidth < 640 ? 0.03 : 0.05;
 
                         // Active card adjustments with constrained position
                         const isActive = activeCard === card.id;

@@ -37,33 +37,39 @@ export default function ApologyWebsite() {
     {
       id: 1,
       type: 'image',
-      src: "/api/placeholder/800/600",
+      src: "/images/roadtrip.jpg",
       caption: "Our first roadtrip together"
     },
     {
       id: 2,
       type: 'video',
-      src: "/api/placeholder/800/600", // Placeholder since we can't embed actual videos
-      posterSrc: "/api/placeholder/800/600",
-      caption: "That silly dance video from Sarah's wedding"
+      src: "/videos/dance-video.mp4",
+      webmSrc: "/videos/dance-video.webm", // Additional format for better compatibility
+      posterSrc: "/images/dance-poster.jpg",
+      caption: "That silly dance video from Sarah's wedding",
+      autoplay: false,
+      muted: false // Set to true if you want videos muted by default
     },
     {
       id: 3,
       type: 'image',
-      src: "/api/placeholder/800/600",
+      src: "/images/picnic.jpg",
       caption: "Our picnic at the lake"
     },
     {
       id: 4,
       type: 'video',
-      src: "/api/placeholder/800/600", // Placeholder since we can't embed actual videos
-      posterSrc: "/api/placeholder/800/600",
-      caption: "Your birthday surprise reaction"
+      src: "/videos/birthday-surprise.mp4",
+      webmSrc: "/videos/birthday-surprise.webm",
+      posterSrc: "/images/birthday-poster.jpg",
+      caption: "Your birthday surprise reaction",
+      autoplay: false,
+      muted: false
     },
     {
       id: 5,
       type: 'image',
-      src: "/api/placeholder/800/600",
+      src: "/images/hiking.jpg",
       caption: "Hiking to the waterfall"
     },
   ];
@@ -264,7 +270,24 @@ export default function ApologyWebsite() {
         handleTouchMove={handleTouchMove}
         toggleVideoPlay={toggleVideoPlay}
         videoRefs={videoRefs}
-      />
+      >
+        {mediaCards.map(card => (
+          card.type === 'video' && (
+            <video
+              ref={el => videoRefs.current[card.id] = el}
+              poster={card.posterSrc}
+              className="w-full h-full object-cover"
+              playsInline // Better mobile experience
+              preload="metadata" // Faster loading
+            >
+              <source src={card.src} type="video/mp4" />
+              {card.webmSrc && <source src={card.webmSrc} type="video/webm" />}
+              {card.oggSrc && <source src={card.oggSrc} type="video/ogg" />}
+              Your browser does not support the video tag.
+            </video>
+          )
+        ))}
+      </DraggableMediaCards>
 
       <ApologyQuotes
         quotes={quotes}

@@ -22,7 +22,7 @@ export default function LetterModal({ showLetter, setShowLetter }) {
                     <p>All I'm asking for is one more opportunity to show you how much you mean to me. I'll do whatever it takes to rebuild your trust and make things right again.</p>
                     <p>I'm begging you – please give us another chance. Our love is worth fighting for, and I'm ready to do anything to save what we have.</p>
                     <p className="mt-6">With all my love and deepest apologies,</p>
-                    <p>[Your Name]</p>
+                    <p>Hubba</p>
                 </div>
             </div>
         </div>
