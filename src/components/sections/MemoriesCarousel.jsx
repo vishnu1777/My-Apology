@@ -1,3 +1,4 @@
+import React from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 export default function MemoriesCarousel({
@@ -8,57 +9,65 @@ export default function MemoriesCarousel({
     prevSlide
 }) {
     return (
-        <section className="py-16 px-4 bg-white overflow-hidden">
-            <div className="max-w-4xl mx-auto">
+        <section className="py-16 px-4 bg-pink-50">
+            <div className="max-w-5xl mx-auto">
                 <h2 className="text-3xl font-bold text-center mb-2">Our Beautiful Memories</h2>
-                <p className="text-gray-600 text-center mb-8">The moments that remind me how lucky I am to have you</p>
+                <p className="text-gray-600 text-center mb-8">Remember all the wonderful times we've shared</p>
 
                 <div className="relative overflow-hidden rounded-xl shadow-xl">
-                    {/* Carousel */}
-                    <div className="relative h-64 md:h-96">
+                    {/* Carousel container with fixed aspect ratio */}
+                    <div className="relative w-full h-0 pb-[66.67%]"> {/* 3:2 aspect ratio */}
                         {memories.map((memory, index) => (
                             <div
                                 key={memory.id}
-                                className={`absolute top-0 left-0 w-full h-full transition-opacity duration-500 ${index === currentSlide ? 'opacity-100' : 'opacity-0 pointer-events-none'
+                                className={`absolute inset-0 transition-opacity duration-500 ${index === currentSlide ? 'opacity-100 z-10' : 'opacity-0 z-0'
                                     }`}
                             >
                                 <img
                                     src={memory.src}
                                     alt={memory.alt}
                                     className="w-full h-full object-cover"
+                                    onError={(e) => {
+                                        console.error(`Failed to load image: ${memory.src}`);
+                                        e.target.src = "/images/placeholder.jpg"; // Fallback image
+                                    }}
                                 />
-                                <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-60 p-3 text-white">
-                                    <p className="text-center">{memory.caption}</p>
+                                <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-60 text-white p-4">
+                                    <p className="text-lg font-medium">{memory.caption}</p>
                                 </div>
                             </div>
                         ))}
                     </div>
 
-                    {/* Controls */}
+                    {/* Navigation buttons */}
                     <button
-                        className="absolute top-1/2 left-2 transform -translate-y-1/2 bg-white bg-opacity-70 p-2 rounded-full shadow hover:bg-opacity-100 transition-all"
                         onClick={prevSlide}
+                        className="absolute left-2 top-1/2 -translate-y-1/2 bg-white bg-opacity-80 hover:bg-opacity-100 p-2 rounded-full shadow-md z-20 transition-all"
+                        aria-label="Previous slide"
                     >
                         <ChevronLeft size={24} />
                     </button>
+
                     <button
-                        className="absolute top-1/2 right-2 transform -translate-y-1/2 bg-white bg-opacity-70 p-2 rounded-full shadow hover:bg-opacity-100 transition-all"
                         onClick={nextSlide}
+                        className="absolute right-2 top-1/2 -translate-y-1/2 bg-white bg-opacity-80 hover:bg-opacity-100 p-2 rounded-full shadow-md z-20 transition-all"
+                        aria-label="Next slide"
                     >
                         <ChevronRight size={24} />
                     </button>
+                </div>
 
-                    {/* Indicators */}
-                    <div className="absolute bottom-14 left-0 right-0 flex justify-center space-x-2">
-                        {memories.map((_, index) => (
-                            <button
-                                key={index}
-                                onClick={() => setCurrentSlide(index)}
-                                className={`w-2.5 h-2.5 rounded-full transition-all ${index === currentSlide ? 'bg-white scale-125' : 'bg-white bg-opacity-50'
-                                    }`}
-                            />
-                        ))}
-                    </div>
+                {/* Dots indicator */}
+                <div className="flex justify-center mt-4">
+                    {memories.map((_, index) => (
+                        <button
+                            key={index}
+                            onClick={() => setCurrentSlide(index)}
+                            className={`w-3 h-3 mx-1 rounded-full transition-all ${index === currentSlide ? 'bg-pink-500 scale-125' : 'bg-gray-300 hover:bg-gray-400'
+                                }`}
+                            aria-label={`Go to slide ${index + 1}`}
+                        />
+                    ))}
                 </div>
             </div>
         </section>

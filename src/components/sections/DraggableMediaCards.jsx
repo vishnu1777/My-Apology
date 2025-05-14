@@ -48,7 +48,7 @@ export default function DraggableMediaCards({
     return (
         <section className="py-16 px-4 bg-indigo-50 overflow-hidden">
             <div className="max-w-5xl mx-auto overflow-hidden">
-                <h2 className="text-3xl font-bold text-center mb-2">Our Video Memories</h2>
+                <h2 className="text-3xl font-bold text-center mb-2">Our  Memories</h2>
                 <p className="text-gray-600 text-center mb-12">Swipe through our favorite moments together</p>
 
                 <div
@@ -102,8 +102,14 @@ export default function DraggableMediaCards({
                                                 ref={el => videoRefs.current[card.id] = el}
                                                 poster={card.posterSrc}
                                                 className="w-full h-full object-cover"
+                                                playsInline
+                                                autoPlay
+                                                preload="metadata"
+                                                muted={card.muted}
+                                                loop
                                             >
                                                 <source src={card.src} type="video/mp4" />
+                                                {card.webmSrc && <source src={card.webmSrc} type="video/webm" />}
                                                 Your browser does not support the video tag.
                                             </video>
                                             <button

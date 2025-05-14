@@ -39,16 +39,16 @@ export default function ApologyWebsite() {
       src: "/images/precious.jpeg",
       caption: "My love"
     },
-    {
-      id: 2,
-      type: 'video',
-      src: "/videos/Movie.mp4",
-      webmSrc: "/videos/Movie.webm", // Additional format for better compatibility
-      posterSrc: "/videos/Movie.jpg",
-      caption: "You being You",
-      autoplay: false,
-      muted: false // Set to true if you want videos muted by default
-    },
+    // {
+    //   id: 2,
+    //   type: 'video',
+    //   src: "/videos/Movie.mp4",
+    //   webmSrc: "/videos/Movie.webm", // Additional format for better compatibility
+    //   posterSrc: "/videos/Movie.jpg",
+    //   caption: "You being You",
+    //   autoplay: false,
+    //   muted: false // Set to true if you want videos muted by default
+    // },
     {
       id: 3,
       type: 'image',
@@ -67,15 +67,15 @@ export default function ApologyWebsite() {
       src: "/images/onam.jpeg",
       caption: "Onam Celebration"
     },
-    {
-      id: 7,
-      type: 'video',
-      src: "/videos/JainHotel.mp4",
-      webmSrc: "/videos/JainHotel.webm",
-      posterSrc: "/images/JainHotel.jpg",
-      autoplay: true,
-      muted: false
-    },
+    // {
+    //   id: 7,
+    //   type: 'video',
+    //   src: "/videos/demo.mp4",
+    //   webmSrc: "/videos/demo.webm",
+    //   posterSrc: "/images/demo.jpg",
+    //   autoplay: true,
+    //   muted: false
+    // },
     {
       id: 6,
       type: 'image',
@@ -86,10 +86,12 @@ export default function ApologyWebsite() {
 
   // Sample images - replace with placeholder images
   const memories = [
-    { id: 1, src: "/api/placeholder/800/600", alt: "Our first date", caption: "Our first date at the coffee shop" },
-    { id: 2, src: "/api/placeholder/800/600", alt: "Beach day", caption: "That perfect day at the beach" },
-    { id: 3, src: "/api/placeholder/800/600", alt: "Movie night", caption: "Movie night with your favorite snacks" },
-    { id: 4, src: "/api/placeholder/800/600", alt: "Road trip", caption: "Our amazing road trip adventure" },
+    { id: 1, src: "/images/mcdonalds.jpeg", alt: "Our first date", caption: "Our first date at the coffee shop" },
+    { id: 2, src: "/images/beach.jpeg", alt: "Beach day", caption: "That perfect day at the beach" },
+    { id: 3, src: "/images/inoxmall.jpeg", alt: "Movie night", caption: "Movie night with your favorite snacks" },
+    { id: 4, src: "/images/forum-outside.jpeg", alt: "Road trip", caption: "Our amazing road trip adventure" },
+    { id: 5, src: "/images/zoo.jpeg", alt: "Road trip", caption: "Our amazing road trip adventure" },
+    { id: 6, src: "/images/underwater.jpeg", alt: "Road trip", caption: "Our amazing road trip adventure" }
   ];
 
   // Apology quotes
@@ -186,9 +188,24 @@ export default function ApologyWebsite() {
   const toggleVideoPlay = (id) => {
     const video = videoRefs.current[id];
     if (video) {
-      if (video.paused) {
-        video.play();
-        setIsVideoPlaying(prev => ({ ...prev, [id]: true }));
+      if (video.paused || video.ended) {
+        // First load the video data if needed
+        if (video.readyState === 0) {
+          video.load();
+        }
+
+        // Try to play the video
+        const playPromise = video.play();
+
+        if (playPromise !== undefined) {
+          playPromise.then(() => {
+            console.log(`Video ${id} playing successfully`);
+            setIsVideoPlaying(prev => ({ ...prev, [id]: true }));
+          }).catch(err => {
+            console.error("Could not play video:", err);
+            setIsVideoPlaying(prev => ({ ...prev, [id]: false }));
+          });
+        }
       } else {
         video.pause();
         setIsVideoPlaying(prev => ({ ...prev, [id]: false }));
@@ -252,6 +269,27 @@ export default function ApologyWebsite() {
     }, 5000);
 
     return () => clearInterval(interval);
+  }, []);
+
+  // Update the useEffect to handle video initialization
+  useEffect(() => {
+    // Initialize video playing states
+    const initialVideoStates = {};
+    mediaCards.forEach(card => {
+      if (card.type === 'video') {
+        initialVideoStates[card.id] = card.autoplay || false;
+
+        // Set up autoplay videos
+        if (card.autoplay && videoRefs.current[card.id]) {
+          videoRefs.current[card.id].play().catch(e => {
+            console.log("Autoplay prevented:", e);
+            setIsVideoPlaying(prev => ({ ...prev, [card.id]: false }));
+          });
+        }
+      }
+    });
+
+    setIsVideoPlaying(initialVideoStates);
   }, []);
 
   return (
