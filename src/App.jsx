@@ -36,40 +36,51 @@ export default function ApologyWebsite() {
     {
       id: 1,
       type: 'image',
-      src: "/images/roadtrip.jpg",
-      caption: "Our first roadtrip together"
+      src: "/images/precious.jpeg",
+      caption: "My love"
     },
     {
       id: 2,
       type: 'video',
-      src: "/videos/dance-video.mp4",
-      webmSrc: "/videos/dance-video.webm", // Additional format for better compatibility
-      posterSrc: "/images/dance-poster.jpg",
-      caption: "That silly dance video from Sarah's wedding",
+      src: "/videos/Movie.mp4",
+      webmSrc: "/videos/Movie.webm", // Additional format for better compatibility
+      posterSrc: "/videos/Movie.jpg",
+      caption: "You being You",
       autoplay: false,
       muted: false // Set to true if you want videos muted by default
     },
     {
       id: 3,
       type: 'image',
-      src: "/images/picnic.jpg",
-      caption: "Our picnic at the lake"
+      src: "/images/aesthetic.jpeg",
+      caption: "Aesthetic at Manglore"
     },
     {
       id: 4,
-      type: 'video',
-      src: "/videos/birthday-surprise.mp4",
-      webmSrc: "/videos/birthday-surprise.webm",
-      posterSrc: "/images/birthday-poster.jpg",
-      caption: "Your birthday surprise reaction",
-      autoplay: false,
-      muted: false
+      type: 'image',
+      src: "/images/forum.jpeg",
+      caption: "Our Food Date"
     },
     {
       id: 5,
       type: 'image',
-      src: "/images/hiking.jpg",
-      caption: "Hiking to the waterfall"
+      src: "/images/onam.jpeg",
+      caption: "Onam Celebration"
+    },
+    {
+      id: 7,
+      type: 'video',
+      src: "/videos/JainHotel.mp4",
+      webmSrc: "/videos/JainHotel.webm",
+      posterSrc: "/images/JainHotel.jpg",
+      autoplay: true,
+      muted: false
+    },
+    {
+      id: 6,
+      type: 'image',
+      src: "/images/crazy.jpeg",
+      caption: "Craziness at Manglore"
     },
   ];
 

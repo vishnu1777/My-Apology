@@ -143,7 +143,7 @@ export const ReconciliationOptionsComponent = () => {
 
                     <div className="mb-6">
                         <label htmlFor="otherOption" className="block text-gray-700 mb-2 font-medium">
-                            Other (please specify):
+                            Other (please specify) You can add any links too:
                         </label>
                         <input
                             type="text"
