@@ -12,9 +12,8 @@ import MemoriesCarousel from './components/sections/MemoriesCarousel';
 import ApologyQuotes from './components/sections/ApologyQuotes';
 import Promises from './components/sections/Promises';
 import Timeline from './components/sections/Timeline';
-import CallToAction from './components/sections/CallToAction';
 import DraggableMediaCards from './components/sections/DraggableMediaCards';
-
+import RatingAndReconciliationComponents from './components/sections/Retaliation';
 export default function ApologyWebsite() {
   // State for carousel
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -300,8 +299,7 @@ export default function ApologyWebsite() {
       <Promises promises={promises} />
 
       <Timeline timeline={timeline} />
-
-      <CallToAction />
+      <RatingAndReconciliationComponents />
 
       <Footer />
     </div>
